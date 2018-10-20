@@ -1,0 +1,10 @@
+*First install wamp/xamp
+*install oracle 11g and oracle insta_client for 11_G
+*install oracle and connect wamp/xamp with it (give system password= oracle123)
+*Now install netbeans from this link  https://netbeans.org/downloads/
+*now select a folder to be your localhost folder.. unzip the careerpedia.rar there
+*then open oracle sql command line from start menu
+
+simple copy the folloing all sql commands.txt text and paste on the sql command line
+Now import careerpedia project fron netbeans.
+Now click run project.

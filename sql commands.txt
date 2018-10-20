@@ -1,0 +1,25 @@
+Create table expertise(
+	Username NVARCHAR2(50),
+	Category NVARCHAR2(50)
+	eDate DATE
+);
+Create table experience(
+	Username NVARCHAR2(50),
+	post NVARCHAR2(50),
+	Institute NVARCHAR2(50),
+	category NVARCHAR2(50)
+	expDate DATE
+);
+Create table publications(
+
+	Username NVARCHAR2(50),
+	Name NVARCHAR2(100),
+	Link NVARCHAR2(200),
+	Topic NVARCHAR2(250),
+	pdesc long,
+	pDate DATE
+);
+Create table follow(
+	follower NVARCHAR2(50),
+	followed NVARCHAR2(50)
+);

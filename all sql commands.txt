@@ -1,0 +1,164 @@
+///JODI RESET KORTE HOY DB
+
+conn mist/mist;
+drop table st;
+drop table all_user;
+drop table inst;
+drop table rec;
+drop table ckpoint;
+drop table user_notification;
+drop table user_msg;
+drop table edu;
+drop table experience;
+drop table expertise;
+drop table interest;
+drop table publications;
+drop table choice;
+drop sequence ta_seq;
+drop table ta_circ;
+
+
+
+
+///DB INSTALL KORAR JONNO
+Conn system/oracle;
+create user mist identified by mist;
+grant connect to mist;
+grant all privilege to mist identified by mist;
+alter user mist default tablespace users quota 3096M on users;	
+Disconn;
+Conn mist/mist;
+
+create table st(
+	fname NVARCHAR2(50),
+	lname NVARCHAR2(50),
+	username NVARCHAR2(50),
+	dept NVARCHAR2(50) default 'Department Name',
+	dob DATE,
+	gender NVARCHAR2(10) default 'Male',
+	phone NVARCHAR2(50) default 'Phone No.',
+	institute NVARCHAR2(50) default 'Institute Name',
+	img_path NVARCHAR2(200) default 'img/user_default.png',
+	pubnum NUMBER(10,0) default 0
+);
+create table Inst(
+	fname NVARCHAR2(50),
+	lname NVARCHAR2(50),
+	username NVARCHAR2(50),
+	dept NVARCHAR2(50) default 'Department Name',
+	dob DATE,
+	gender NVARCHAR2(10) default 'Male',
+	phone NVARCHAR2(50) default 'Phone No.',
+	institute NVARCHAR2(50) default 'Institute Name',
+	img_path NVARCHAR2(200) default 'img/user_default.png',
+	pubnum NUMBER(10,0) default 0
+);
+
+create table Rec(
+	fname NVARCHAR2(50),
+	lname NVARCHAR2(50),
+	username NVARCHAR2(50),
+	dept NVARCHAR2(50) default 'Department Name',
+	dob DATE,
+	gender NVARCHAR2(10) default 'Male',
+	phone NVARCHAR2(50) default 'Phone No.',
+	institute NVARCHAR2(50) default 'Institute Name',
+	img_path NVARCHAR2(200) default 'img/user_default.png',
+	pubnum NUMBER(10,0) default 0
+);
+
+create table all_user(
+	email NVARCHAR2(50),
+	pw NVARCHAR2(50),
+	username NVARCHAR2(50),
+	role NVARCHAR2(50),
+	jdate DATE
+);
+
+create table ckpoint( 
+	username NVARCHAR2(100)
+);
+Create table user_notification(
+	Username_rcvr NVARCHAR2(50),
+	Username_sender NVARCHAR2(50),
+	offer_id NVARCHAR2(50),
+	offer_type Number(3,0) 
+);	
+
+Create table user_msg(
+	Username_rcvr NVARCHAR2(50),
+	Username_sender NVARCHAR2(50),
+	Msg NVARCHAR2(344),
+	Timestamp DATE
+);
+
+Create table edu(
+	Username NVARCHAR2(50),
+	Degree NVARCHAR2(50),
+	Grade NUMBER(4,2),
+	Institute NVARCHAR2(50),
+	Gyear NVARCHAR2(10),
+	Major NVARCHAR2(50),
+	Dept NVARCHAR2(50)
+);
+Create table expertise(
+	Username NVARCHAR2(50),
+	Category NVARCHAR2(50)
+);
+Create table interest(
+	Username NVARCHAR2(50),
+	Category NVARCHAR2(50)
+);
+Create table experience(
+	Username NVARCHAR2(50),
+	post NVARCHAR2(50),
+	Institute NVARCHAR2(50),
+	category NVARCHAR2(50)
+);
+Create table choice(
+	Username NVARCHAR2(50),
+	Ch NVARCHAR2(50) default 'Higher Study'
+);
+Create table publications(
+	Username NVARCHAR2(50),
+	Name NVARCHAR2(100),
+	Link NVARCHAR2(200),
+	Topic NVARCHAR2(250),
+	pDate NVARCHAR2(40),
+	pdesc long
+);
+
+CREATE SEQUENCE ta_seq
+  MINVALUE 0
+  START WITH 0
+  INCREMENT BY 1
+  NOCACHE;
+
+/*
+Resetting sql command for ta_seq sequence
+
+alter sequence ta_seq increment by -2;
+select ta_seq.nextval from dual;
+alter sequence ta_seq increment by 1;
+ 
+
+*/
+  
+Create table ta_circ(
+	C_id Number(10,0),
+	Dept NVARCHAR2(50),
+	Deg NVARCHAR2(50),
+	Gpa Number(6,2),
+	Topic NVARCHAR2(200),
+	Pubsum NUMBER(10,0),
+	Gyear NVARCHAR2(20),
+	avail NUMBER(2,0) default 1
+);
+create table follow(
+follower NVARCHAR2(50),
+followed NVARCHAR2(50)
+);
+
+
+SELECT INITCAP(st.fname),INITCAP(st.lname) FROM st WHERE st.fname LIKE '%t%' or st.lname LIKE '%a%';
+SELECT INITCAP(st.fname),INITCAP(st.lname) FROM st WHERE st.fname LIKE '%".$sname1."%' or st.lname LIKE '%".$sname1."%'

@@ -1,0 +1,183 @@
+
+<!DOCTYPE html>
+<?php
+    session_start();
+    $conn = oci_connect('mist','mist','localhost/XE');
+    $username=$_SESSION["username_s"];
+	if($username=="")
+	{
+		echo "
+			<script>
+				location.replace(\"index2.php\");			
+			</script>
+		
+		";
+	}
+    $query = "SELECT role from all_user where username='".$username."'";
+    $st=  oci_parse($conn, $query);
+    oci_execute($st);
+    $row=  oci_fetch_array($st);
+    $role=$row[0];
+    $map = array(
+        "Instructor" => "Inst",
+        "Student" => "St",
+        "Recruiter" => "Rec"
+    );
+    
+    $table = $map[$role];
+    $query = "SELECT * FROM ".$table." WHERE username = '".$username."'";
+    $st=  oci_parse($conn, $query);
+    oci_execute($st);
+    $row=  oci_fetch_array($st);   
+    $fname=$row[0];
+    $lname=$row[1];
+    $fullname=$fname.' '.$lname;
+    $username=$row[2];
+    $deptname=$row[3];
+    $dob=$row[4];
+    $gender=$row[5];
+    $phone=$row[6];
+    $institute=$row[7];
+    $imgsrc=$row[8];
+    $query = "SELECT to_char(jdate,'dd-mon-yyyy') FROM all_user WHERE username = '".$username."'";
+    $st=  oci_parse($conn, $query);
+    oci_execute($st);
+    $row=  oci_fetch_array($st);  
+    $joining=$row[0];
+    $query = "SELECT Username_rcvr  FROM user_notification WHERE Username_rcvr  = '".$username."'";
+    $st=  oci_parse($conn, $query);
+    oci_execute($st);
+    $noti_num=oci_fetch_all($st, $outarr);
+    
+    $query = "SELECT Username_rcvr  FROM user_msg WHERE Username_rcvr  = '".$username."'";
+    $st=  oci_parse($conn, $query);
+    oci_execute($st);
+    $msg_num=oci_fetch_all($st, $outarr);    
+?>
+<html lang="en">
+
+    <head>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Mist CareerPedia</title>
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
+        <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="assets/font-awesome/css/font-awesome.min.css">
+		<link rel="stylesheet" href="assets/css/form-elements.css">
+        <link rel="stylesheet" href="assets/css/style.css">
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <!-- Favicon and touch icons -->
+        <link rel="shortcut icon" href="assets/img/backgrounds/1.jpg">
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
+
+    </head>
+
+    <body>
+
+        <!-- Top content -->
+        <div class="top-content">
+        	
+            <div class="inner-bg">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-8 col-sm-offset-2 text">
+                            <h1><strong><h>MIST <i>CareerPedia</i></h></strong> </h1>
+                            <div class="description">
+                            
+	                       
+
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="row">
+                     
+                        <form class="form-inline">
+  <div class="form-group">  <label for="email"><font color="white"><h5>Email</h5></font></label>
+<input type="text" name="form-email" class="form-email form-control" id="form-email">
+</div>
+  <div class="form-group">
+    <label for="pwd"><font color="white"><h5>Password</h5></font></label>
+    <input type="password" class="form-control" id="pwd">
+  </div>
+   <button type="submit" class="btn"><h5>Log In</h5></button>
+</form>
+</div>
+                    
+
+                    <div class="row">
+                        <div class="col-sm-4 col-sm-offset-4 form-box">
+                        	<div class="form-top">
+                        		<div class="form-top-left">
+                        			<h3>Sign up for free</h3>
+                            
+                        		</div>
+                        		<div class="form-top-right">
+                        			<i class="fa fa-pencil"></i>
+                        		</div>
+                            </div>
+                           <div class="form-bottom">
+                                    <form role="form" action="" method="post" class="registration-form">
+                                        <div class="form-group">
+                                            <label class="sr-only" for="form-first-name">First name</label>
+                                            <input type="text" name="form-first-name" placeholder="First name..." class="form-first-name form-control" id="form-first-name">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="sr-only" for="form-last-name">Last name</label>
+                                            <input type="text" name="form-last-name" placeholder="Last name..." class="form-last-name form-control" id="form-last-name">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="sr-only" for="form-email">Email</label>
+                                            <input type="text" name="form-email" placeholder="Email..." class="form-email form-control" id="form-email">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="sr-only" for="form-password">Password</label>
+                                            <input type="password" name="form-password" placeholder="Password..." class="form-password form-control" id="form-password">
+                                        </div>
+                                        <button type="submit" class="btn">Join Now!</button>
+                                        
+                                        
+                                    </form>
+                                </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-sm-offset-3 social-login">
+                           <p> <font color="white">By clicking Join Now, you agree to Mist CareerPedia's User Agreement, Privacy Policy and Cookie Policy</font></p>
+                            
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            
+        
+
+
+        <!-- Javascript -->
+        <script src="assets/js/jquery-1.11.1.min.js"></script>
+        <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+        <script src="assets/js/jquery.backstretch.min.js"></script>
+        <script src="assets/js/scripts.js"></script>
+        
+        <!--[if lt IE 10]>
+            <script src="assets/js/placeholder.js"></script>
+        <![endif]-->
+
+    </body>
+
+</html>
