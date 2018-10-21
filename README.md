@@ -11,3 +11,5 @@ To create a dynamic intelligent platform for all graduate students from universi
 6. Real-time newsfeed
 7. User to User messaging
 8. Real-time Tinker
+
+Read **MIST-CAREEDPEDIA_final.pdf** document for detail information.
